@@ -155,13 +155,13 @@
         var deviationElement = heartRateInfo.querySelector(".deviation-rate");
 
         // Farbe basierend auf dem Prozentsatz der Abweichung festlegen
-        if (Math.abs(percentDeviation) > 25) {
+        if (Math.abs(percentDeviation) > 10) {
             deviationElement.classList.add("red");
             deviationElement.classList.remove("orange", "green");
-        } else if (Math.abs(percentDeviation) > 15) {
+        } else if (Math.abs(percentDeviation) > 5) {
             deviationElement.classList.add("orange");
             deviationElement.classList.remove("red", "green");
-        } else if (Math.abs(percentDeviation) < 15) {
+        } else if (Math.abs(percentDeviation) < 5) {
             deviationElement.classList.add("green");
             deviationElement.classList.remove("red", "orange");
         }
