@@ -1,0 +1,525 @@
+{{ block styles }}
+
+<style>
+* {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+}
+
+/*Container für das Tacho */
+.speedometer-container {
+ width: 300px;
+ height: 150px; 
+ border: 3px solid black;
+ border-radius: 300px 300px 0 0; /* Nur die obere Hälfte des Kreises sichtbar machen */
+ margin: 50px auto;
+ position: relative;
+ overflow: hidden;
+}
+
+/*Benötigt für den Farbübergang des Tachos */
+.speedometer-container::before {
+ content: "";
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ border-radius: 300px 300px 0 0; /* Nur die obere Hälfte des Kreises sichtbar machen */
+ background: linear-gradient(90deg, green, orange 50%, red); /*Hier könnte der Farbübergang individuell angepasst werden*/
+ transform: rotate(0deg);
+ z-index: -1;
+}
+
+
+.center-point {
+ width: 20px;
+ height: 20px;
+ background-color: black;
+ border-radius: 50%;
+ position: absolute;
+ top: 137px;
+ left: 137px;
+ z-index: 10;
+}
+
+.speedometer-center-hide {
+ width: 250px;
+ height: 250px;
+ background-color: white;
+ border-radius: 50%;
+ position: absolute;
+ top: 22px;
+ left: 22px;
+ z-index: 9;
+}
+
+.speedometer-bottom-hide {
+ width: 320px;
+ height: 250px;
+ background-color: white;
+ position: absolute;
+ z-index: 11;
+ top: 160px;
+ left: -14px;
+ border-top: 1px solid;
+}
+
+/*Container d des Tacho Nadel enthält*/
+.arrow-container {
+ width: 160px;
+ height: 160px;
+ background-color: transparent;
+ position: absolute;
+ z-index: 12;
+ top: 67px;
+ left: 67px;
+}
+
+.arrow-wrapper {
+ width: 160px;
+ height: 160px;
+ background-color: transparent;
+ position: relative;
+ transition: all 0.4s;
+}
+
+/*Anpassung der Tachonadel*/
+.arrow {
+ width: 110px;
+ height: 4px;
+ background-color: purple;
+ position: absolute;
+ top: 78px;
+ left: -30px;
+}
+
+/* Für jede mögliche Herzfrequenz (hier genannt speed) wird die Position der Nadel definiert */
+ .speed-50 {
+ transform: rotate(0deg);
+ }
+ .speed-51 {
+ transform: rotate(2deg);
+ }
+ .speed-52 {
+ transform: rotate(4deg);
+ }
+ .speed-53 {
+ transform: rotate(6deg);
+ }
+ .speed-54 {
+ transform: rotate(8deg);
+ }
+ .speed-55 {
+ transform: rotate(10deg);
+ }
+ .speed-56 {
+ transform: rotate(12deg);
+ }
+ .speed-57 {
+ transform: rotate(14deg);
+ }
+ .speed-58 {
+ transform: rotate(16deg);
+ }
+ .speed-59 {
+ transform: rotate(18deg);
+ }
+ .speed-60 {
+ transform: rotate(20deg);
+ }
+ .speed-61 {
+ transform: rotate(22deg);
+ }
+ .speed-62 {
+ transform: rotate(24deg);
+ }
+ .speed-63 {
+ transform: rotate(26deg);
+ }
+ .speed-64 {
+ transform: rotate(28deg);
+ }
+ .speed-65 {
+ transform: rotate(30deg);
+ }
+ .speed-66 {
+ transform: rotate(32deg);
+ }
+ .speed-67 {
+ transform: rotate(34deg);
+ }
+ .speed-68 {
+ transform: rotate(36deg);
+ }
+ .speed-69 {
+ transform: rotate(38deg);
+ }
+ .speed-70 {
+ transform: rotate(40deg);
+ }
+ .speed-71 {
+ transform: rotate(42deg);
+ }
+ .speed-72 {
+ transform: rotate(44deg);
+ }
+ .speed-73 {
+ transform: rotate(46deg);
+ }
+ .speed-74 {
+ transform: rotate(48deg);
+ }
+ .speed-75 {
+ transform: rotate(50deg);
+ }
+ .speed-76 {
+ transform: rotate(52deg);
+ }
+ .speed-77 {
+ transform: rotate(54deg);
+ }
+ .speed-78 {
+ transform: rotate(56deg);
+ }
+ .speed-79 {
+ transform: rotate(58deg);
+ }
+ .speed-80 {
+ transform: rotate(60deg);
+ }
+ .speed-81 {
+ transform: rotate(62deg);
+ }
+ .speed-82 {
+ transform: rotate(64deg);
+ }
+ .speed-83 {
+ transform: rotate(66deg);
+ }
+ .speed-84 {
+ transform: rotate(68deg);
+ }
+ .speed-85 {
+ transform: rotate(70deg);
+ }
+ .speed-86 {
+ transform: rotate(72deg);
+ }
+ .speed-87 {
+ transform: rotate(74deg);
+ }
+ .speed-88 {
+ transform: rotate(76deg);
+ }
+ .speed-89 {
+ transform: rotate(78deg);
+ }
+ .speed-90 {
+ transform: rotate(80deg);
+ }
+ .speed-91 {
+ transform: rotate(82deg);
+ }
+ .speed-92 {
+ transform: rotate(84deg);
+ }
+ .speed-93 {
+ transform: rotate(86deg);
+ }
+ .speed-94 {
+ transform: rotate(88deg);
+ }
+ .speed-95 {
+ transform: rotate(90deg);
+ }
+ .speed-96 {
+ transform: rotate(92deg);
+ }
+ .speed-97 {
+ transform: rotate(94deg);
+ }
+ .speed-98 {
+ transform: rotate(96deg);
+ }
+ .speed-99 {
+ transform: rotate(98deg);
+ }
+ .speed-100 {
+ transform: rotate(100deg);
+ }
+ .speed-101 {
+ transform: rotate(102deg);
+ }
+ .speed-102 {
+ transform: rotate(104deg);
+ }
+ .speed-103 {
+ transform: rotate(106deg);
+ }
+ .speed-104 {
+ transform: rotate(108deg);
+ }
+ .speed-105 {
+ transform: rotate(110deg);
+ }
+ .speed-106 {
+ transform: rotate(112deg);
+ }
+ .speed-107 {
+ transform: rotate(114deg);
+ }
+ .speed-108 {
+ transform: rotate(116deg);
+ }
+ .speed-109 {
+ transform: rotate(118deg);
+ }
+ .speed-110 {
+ transform: rotate(120deg);
+ }
+ .speed-111 {
+ transform: rotate(122deg);
+ }
+ .speed-112 {
+ transform: rotate(124deg);
+ }
+ .speed-113 {
+ transform: rotate(126deg);
+ }
+ .speed-114 {
+ transform: rotate(128deg);
+ }
+ .speed-115 {
+ transform: rotate(130deg);
+ }
+ .speed-116 {
+ transform: rotate(132deg);
+ }
+ .speed-117 {
+ transform: rotate(134deg);
+ }
+ .speed-118 {
+ transform: rotate(136deg);
+ }
+ .speed-119 {
+ transform: rotate(138deg);
+ }
+ .speed-120 {
+ transform: rotate(140deg);
+ }
+ .speed-121 {
+ transform: rotate(142deg);
+ }
+ .speed-122 {
+ transform: rotate(144deg);
+ }
+ .speed-123 {
+ transform: rotate(146deg);
+ }
+ .speed-124 {
+ transform: rotate(148deg);
+ }
+ .speed-125 {
+ transform: rotate(150deg);
+ }
+ .speed-126 {
+ transform: rotate(152deg);
+ }
+ .speed-127 {
+ transform: rotate(154deg);
+ }
+ .speed-128 {
+ transform: rotate(156deg);
+ }
+ .speed-129 {
+ transform: rotate(158deg);
+ }
+ .speed-130 {
+ transform: rotate(160deg);
+ }
+ .speed-131 {
+ transform: rotate(162deg);
+ }
+ .speed-132 {
+ transform: rotate(164deg);
+ }
+ .speed-133 {
+ transform: rotate(166deg);
+ }
+ .speed-134 {
+ transform: rotate(168deg);
+ }
+ .speed-135 {
+ transform: rotate(170deg);
+ }
+ .speed-136 {
+ transform: rotate(172deg);
+ }
+ .speed-137 {
+ transform: rotate(174deg);
+ }
+ .speed-138 {
+ transform: rotate(176deg);
+ }
+ .speed-139 {
+ transform: rotate(178deg);
+ }
+ .speed-140 {
+ transform: rotate(180deg);
+ }
+
+ /* Anpassung des Texts der in dem Tacho steht */
+.speedometer-text {
+ width: 180px;
+ position: absolute;
+ z-index: 20;
+ left: 58px;
+ top: 60px;
+ text-align: center;
+ font-weight: bold;
+}
+
+.static {
+ font-size: 18px;
+}
+
+.dynamic {
+ margin-top: 10px;
+}
+
+.km {
+ font-size: 32px;
+}
+
+.unit {
+ font-size: 14px;
+ margin-left: 5px;
+}
+</style>
+
+{{ endblock }}
+
+{{ block content }}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>heartrate - Teamprojekt HTML, CSS & Javascript</title>
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <div class="speedometer-container">
+    <!-- Tacho-Texte -->
+ <div class="speedometer-text">
+ <div class="static">Heartrate</div>
+ <div class="dynamic">
+ <span class="km">0</span>
+ <span class="unit">BPM</span>
+ </div>
+ </div>
+  <!-- Mittelpunkt des Tachos -->
+ <div class="center-point"></div>
+ <div class="speedometer-center-hide"></div>
+ <div class="speedometer-bottom-hide"></div>
+ <!-- Container für die Tachonadel -->
+ <div class="arrow-container">
+ <!-- Wrapper für die Tachonadel -->
+ <div class="arrow-wrapper speed-0">
+    <!-- Tachonadel -->
+ <div class="arrow"></div>
+ </div>
+ </div>
+ </div>
+ <!-- Skalen des Tachos -->
+ <div class="speedometer-scale speedometer-scale-1 active"></div>
+ <div class="speedometer-scale speedometer-scale-2"></div>
+ <div class="speedometer-scale speedometer-scale-3"></div>
+ <div class="speedometer-scale speedometer-scale-4"></div>
+ <div class="speedometer-scale speedometer-scale-5"></div>
+ <div class="speedometer-scale speedometer-scale-6"></div>
+ <div class="speedometer-scale speedometer-scale-7"></div>
+ <div class="speedometer-scale speedometer-scale-8"></div>
+ <div class="speedometer-scale speedometer-scale-9"></div>
+ <div class="speedometer-scale speedometer-scale-10"></div>
+ <div class="speedometer-scale speedometer-scale-11"></div>
+ <div class="speedometer-scale speedometer-scale-12"></div>
+ <div class="speedometer-scale speedometer-scale-13"></div>
+ <div class="speedometer-scale speedometer-scale-14"></div>
+ <div class="speedometer-scale speedometer-scale-15"></div>
+ <div class="speedometer-scale speedometer-scale-16"></div>
+ <div class="speedometer-scale speedometer-scale-16"></div>
+ </div>
+ <script src="logic.js"></script>
+</body>
+</html>
+
+{{ endblock }}
+
+{{ block scripts }}
+
+<script>
+    /* Definition benötigter Variablen für anschließende Berechnungen*/
+var heartrate = 0;
+var prevHeartrate = 0;
+var currentScale = 1;
+var intValue= 0;
+
+ /* Event-Listener für das DOMContentLoaded-Ereignis, wird ausgeführt, wenn das Dokument geladen wurde */
+ document.addEventListener('DOMContentLoaded', ()=>{
+ setInterval(()=>{
+ liveSend(0)
+ }, 1000); // Interval von 1 Sekunde
+ });
+
+ /* Funktion zum Empfangen von Daten */
+ function liveRecv(data){
+ intValue = parseInt(data); // Mit der Variable intValue werden die Daten aus dem Backend empfangen
+ }
+ 
+  /* Funktion zur Aktualisierung der Herzfrequenz */
+function updateHeartrate() {
+ heartrate = intValue 
+ if (heartrate > 140) // Einbauen eines Filters, der zu große und zu kleine Werte Eliminiert
+        heartrate = 140
+    if (heartrate < 50) 
+        heartrate = 50
+ addClass(); //Fügt der Tachonadel die entsprechende CSS-Klasse hinzu
+ currentScale = Math.ceil(heartrate / 10); // Berechnet die aktuelle Skala basierend auf der Herzfrequenz
+ changeActive(); // Ändert die aktive Skala entsprechend der aktuellen Herzfrequenz
+ changeText(); // Ändert den angezeigten Text auf die aktuelle Herzfrequenz
+}
+
+ /* Funktion zum Hinzufügen einer CSS-Klasse zur Tachonadel */
+function addClass() {
+ let newClass = "speed-" + heartrate; // Generiert den Klassennamen basierend auf der Herzfrequenz
+ let prevClass = "speed-" + prevHeartrate; // Klassennamen der vorherigen Herzfrequenz
+ let el = document.getElementsByClassName("arrow-wrapper")[0]; 
+ if (el.classList.contains(prevClass)) {
+ el.classList.remove(prevClass); 
+ el.classList.add(newClass); 
+        } //muss hier eine weitere }?
+ prevHeartrate = heartrate; // Aktualisiert den Wert der vorherigen Herzfrequenz
+} 
+
+/* Funktion zum Ändern der aktiven Skala */
+function changeActive() {
+ let tempClass = "speedometer-scale-" + currentScale;
+ let el = document.getElementsByClassName(tempClass)[0];
+ el.classList.toggle("active");
+}
+
+function changeText() {
+ let el = document.getElementsByClassName("km")[0];
+ el.innerText = heartrate;
+}
+
+// Aktualisiere die Herzfrequenz alle 1 Sekunde, durch Aufruf der updateHeartrate Funktion
+setInterval(updateHeartrate, 1000);
+</script>
+
+{{ endblock }}
