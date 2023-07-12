@@ -1,4 +1,4 @@
-import users from './data.json' assert {type: 'json'}
+import gazedata from './data.json' assert {type: 'json'}
 
 function displayAOI() {
 
@@ -72,15 +72,15 @@ var runtrough = 0;
 
 function gaze(){
     let gazex, gazey;
-    if(index >= users.length){
+    if(index >= gazedata.length){
         index = 0;
         runtrough += 1;
         console.log("runtrough: " + runtrough);
         return;
     }
-    if(parseFloat(users[index].Lv) === 1 && parseFloat(users[index].Rv) === 1){
-    gazex = (parseFloat(users[index].Lx) + parseFloat(users[index].Rx))/2.0;
-    gazey = (parseFloat(users[index].Ly) + parseFloat(users[index].Ry))/2.0;
+    if(parseFloat(gazedata[index].Lv) === 1 && parseFloat(gazedata[index].Rv) === 1){
+    gazex = (parseFloat(gazedata[index].Lx) + parseFloat(gazedata[index].Rx))/2.0;
+    gazey = (parseFloat(gazedata[index].Ly) + parseFloat(gazedata[index].Ry))/2.0;
     index += 1;
     }
     else {

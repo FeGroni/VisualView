@@ -118,17 +118,17 @@ function getBaseline() {
         index += 1;
     }
     console.log('Baseline: ' + baseline);
-    return baseline / gazedata.length - 2; // remove -1 later
+    return (baseline / gazedata.length) - 2; // remove -1 later
 }
 
 //baseline = getBaseline();
-var maxrandompupildm = 7;
+var maxpupildm = 7;
 var index = 0;
 //Methode um die aktuelle Höhe des Barometers zu bestimmen
 function setBarometerHeight(){
     if(parseFloat(gazedata[index].Lpmv) == 1 && parseFloat(gazedata[index].Rpmv) ==1 ){
         var pupildm = (parseFloat(gazedata[index].Lpm) + parseFloat(gazedata[index].Rpm)/2);
-        var percentage = (pupildm-baseline) / (maxrandompupildm - baseline);
+        var percentage = (pupildm-baseline) / (maxpupildm - baseline);
         var barHeight = percentage * 320;    //Prozentsatz auf Höhe des Barometers umrechnen
         var element = bar;
         if(barHeight<= 320) {

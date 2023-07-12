@@ -1,5 +1,4 @@
 import gazedata from './data.json' assert {type: 'json'}
-
 function displayHeatmap() {
     //HTML-Elemente generieren
     const heatmapWrapper = document.createElement('div');
