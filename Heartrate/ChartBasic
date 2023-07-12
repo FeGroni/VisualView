@@ -1,0 +1,104 @@
+{{ block styles }}
+<style>
+
+</style>
+{{ endblock }}
+
+{{ block content }}
+<!-- Container in dem das Diagramm angezeigt wird -->
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+{{ endblock }}
+
+{{ block scripts }}
+<!-- Einbindung des jCanvas Skripts über online link -->
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+    /* Event-Listener für das DOMContentLoaded-Ereignis, wird ausgeführt, wenn das Dokument geladen wurde */
+    document.addEventListener('DOMContentLoaded', () => {
+        var startTime = new Date().getTime() / 1000; // Startzeit in Sekunden
+        var firstSecondElapsed = false; // Flag, um zu überprüfen, ob die erste Sekunde vergangen ist
+
+        /* "Dummy-Funktion": Beim Start des Programms wird noch keine Herzfrequenz empfangen, erst eine Sekunde später. Diese Problem wird
+        hier durch eine  Dummy Variable gelöst. Diese spielt jedoch keine Rolle in Anzeige und Berechnung*/
+        setInterval(() => {
+            var currentTime = new Date().getTime() / 1000; // Aktuelle Zeit in Sekunden
+            var elapsedTime = currentTime - startTime; // Vergangene Zeit seit dem Start in Sekunden
+
+            var randomData = Math.floor(Math.random() * (140 - 50 + 1)) + 50;
+
+            if (elapsedTime >= 1 && !firstSecondElapsed) {
+                firstSecondElapsed = true;
+                resetChart();
+            }
+
+            liveSend(randomData, elapsedTime);
+        }, 1000);
+    });
+
+    var intValue;
+    var dps = []; // Array für Datenpunkte
+    var chart = new CanvasJS.Chart("chartContainer", { // Erstellung eines neuen Charts des Typs JCanvas
+        title: {
+            text: "Heartrate Data"
+        },
+        axisY: {
+            title: "BPM",
+            includeZero: false
+        },
+        axisX: {
+            title: "Zeit (s)"
+        },
+        data: [{
+            type: "line",
+            dataPoints: dps
+        }]
+    });
+
+    var updateInterval = 1000;
+    var dataLength = 30; // Anzahl der sichtbaren Datenpunkte im Diagramm
+
+    var totalSum = 0; // Summe der Herzfrequenzwerte
+    var averageHeartRate = 0; // Durchschnittliche Herzfrequenz
+    var medianHeartRate = 0; // Median der Herzfrequenz
+    var sortedDataPoints = []; // Array für sortierte Datenpunkte
+
+    function resetChart() {
+        dps = [];
+        totalSum = 0;
+        averageHeartRate = 0;
+        medianHeartRate = 0;
+        sortedDataPoints = [];
+        xVal = 0;
+        chart.options.data[0].dataPoints = dps;
+        chart.render();
+    }
+
+    function liveRecv(data, time) {
+        intValue = parseInt(data);
+        if (intValue > 140) // Einbauen eines Filters, der zu große und zu kleine Werte Eliminiert
+        intValue = 140
+        if (intValue < 50)
+        intValue = 50
+        updateChart(intValue, time);
+    };
+    function updateChart(data, time) {
+        var yVal = data;
+        length++;
+        totalSum += yVal; // Summe aktualisieren
+        dps.push({
+            x: xVal,
+            y: yVal
+        });
+
+        if (dps.length > dataLength) {
+            dps.shift(); // Den ältesten Datenpunkt entfernen, wenn die maximale Anzahl überschritten wird
+        }
+
+        chart.render(); // Diagramm rendern
+
+        xVal++; // Zeit inkrementieren
+    }
+
+    updateChart(); // Initial ein Datenpunkt hinzufügen
+</script>
+{{ endblock }}
