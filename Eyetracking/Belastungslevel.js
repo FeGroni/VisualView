@@ -128,14 +128,14 @@ var index = 0;
 function setBarometerHeight(){
     if(parseFloat(gazedata[index].Lpmv) == 1 && parseFloat(gazedata[index].Rpmv) ==1 ){
         var pupildm = (parseFloat(gazedata[index].Lpm) + parseFloat(gazedata[index].Rpm)/2);
-        var percentage = (pupildm-baseline) / (maxpupildm - baseline);
+        var percentage = (pupildm-baseline) / (maxpupildm - baseline); //Höhe des Barometers als Abweichung vom fiktiven Maximalwert berechnen
         var barHeight = percentage * 320;    //Prozentsatz auf Höhe des Barometers umrechnen
         var element = bar;
         if(barHeight<= 320) {
             element.style.height = barHeight + 'px';
         }
         else{
-            element.style.height = 320 + 'px';
+            element.style.height = 320 + 'px';  //wenn Barometerhöhe > 320px dann gilt: Barometerhöhe = 320px
         }
         index += 1;
     }

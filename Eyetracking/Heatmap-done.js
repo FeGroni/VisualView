@@ -11,12 +11,14 @@ function displayHeatmap() {
     canvas.ID = 'heatmap canvas';
     button.ID = 'toggleButton';
 
+    //CSS-Styles definieren
     button.title = 'Toggle Heatmap';
     button.style.position = 'fixed';
     button.style.top = '10px';
     button.style.right = '10px';
     button.style.zIndex = '9999';
 
+    //Wrapper der Heatmap
     heatmapWrapper.style.position = 'absolute'; // als fixiertes Overlay: 'fixed'
     heatmapWrapper.style.top = '0';
     heatmapWrapper.style.left = '0';
@@ -58,6 +60,8 @@ const elements = displayHeatmap();
 var index = 0;
 var runtrough = 0;
 var gazex, gazey;
+
+//Initialisierung des Arrays mit den Datenpunkten
 var heatmapData = {
         max: 1,
         data: [{
@@ -66,6 +70,8 @@ var heatmapData = {
             value: 1,
         }],
 };
+
+//Initalisierung der Heatmap (h337 aus Heatmap.js Library)
 var heatmapInstance = h337.create({
     container: elements[2],
     data: heatmapData,
@@ -80,12 +86,12 @@ function updateHeatmap() {
         console.log("runtrough: " + runtrough);
         return;
     }
-    if(parseFloat(gazedata[index].Lv) === 1 && parseFloat(gazedata[index].Rv) === 1){
-        gazex = (parseFloat(gazedata[index].Lx) + parseFloat(gazedata[index].Rx))/2.0;
-        gazey = (parseFloat(gazedata[index].Ly) + parseFloat(gazedata[index].Ry))/2.0;
+    if(parseFloat(gazedata[index].Lv) === 1 && parseFloat(gazedata[index].Rv) === 1){   //Berechnung erfolgt nur bei validen Daten
+        gazex = (parseFloat(gazedata[index].Lx) + parseFloat(gazedata[index].Rx))/2.0; //Berechnung des Mittelwerts aus linkem und rechtem Auge
+        gazey = (parseFloat(gazedata[index].Ly) + parseFloat(gazedata[index].Ry))/2.0; //-''-
         index += 1;
         var point = {
-            x: gazex * window.innerWidth,
+            x: gazex * window.innerWidth, //Umrechnung auf HTML-Position
             y: gazey * window.innerHeight,
             value: 1,
         }
