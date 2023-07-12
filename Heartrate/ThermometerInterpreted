@@ -1,0 +1,161 @@
+{{ block styles }}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        height: 100vh;
+        width: 100vw;
+        background-color: #fefefe;
+    }
+
+    .container {
+        /* Thermometer Container */
+        position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .Barometer {
+        content: " BPM";
+        position: absolute;
+        height: 450px;
+        width: 100px;
+    }
+
+    .circle {
+        /* Unterer Kreis des Thermometer */
+        height: 100px;
+        width: 100px;
+        background-color: black;
+        position: absolute;
+        border-radius: 50%;
+        bottom: 0%;
+    }
+
+    .circle::after {
+        /* Innerer blauer Kreis des Thermometer */
+        content: "";
+        display: block;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: blue;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .barsocket {
+        /* Überbrückung vom Kreis bis zum Thermometer */
+        content: "";
+        z-index: 1;
+        display: block;
+        height: 30px;
+        width: 20px;
+        position: absolute;
+        top: 0%;
+        left: 40%;
+        background-color: blue;
+    }
+
+    .barbackground {
+        /* Hintergrund des Thermometer */
+        height: 350px;
+        width: 40px;
+        background-color: black;
+        border-radius: 25px 25px 0 0;
+        position: absolute;
+        bottom: 90px;
+        left: 30%;
+        transform: translateY(0%);
+        overflow: hidden;
+    }
+
+    #bar.bar {
+        /* Barometer mit flexibler Höhe
+         Höhe sind 320 Pixel, wichtig für barHeight*/
+        height: 320px;
+        width: 20px;
+        position: absolute;
+        bottom: 10px;
+        left: 25%;
+        transform-origin: bottom center;
+        border-radius: 10px 10px 0 0;
+        background-color: blue;
+        /* background-image: linear-gradient(0deg, green, red); */
+        transition: height 0.5s ease-out;
+    }
+
+
+
+</style>
+{{ endblock }}
+
+{{ block content }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width">
+    <title>Barometer</title>
+    <link rel="stylesheet" href="./style.css"/>
+    <script src="Barometer-Script.js"></script>
+</head>
+<body>
+<section class="container">
+    <div class="Barometer">
+        <div class="circle">
+            <div class="barsocket"></div>
+        </div>
+        <div class="barbackground">
+            <div id="bar" class="bar"></div>
+        </div>
+    </div>
+    <script src="Barometer-Script.js"></script>
+</section>
+</body>
+</html>
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+    /* Event-Listener für das DOMContentLoaded-Ereignis, wird ausgeführt, wenn das Dokument geladen wurde */
+    document.addEventListener('DOMContentLoaded', () => {
+        setInterval(() => {
+            liveSend(0);
+        }, 1000);// Interval von 1 Sekunde
+    });
+
+    /*Funktion zum empfangen der Daten*/
+    function liveRecv(data) {
+        intValue = parseInt(data); //hier wird die aktuelle Herzrate als Integer gespeichert
+        if (intValue > 140) // Einbauen eines Filters, der zu große und zu kleine Werte Eliminiert
+        intValue = 140
+    if (intValue < 50) //Diese Werte können natürlich nach belieben angepasst werden
+        intValue = 50
+    }
+
+    var barHeight = 0; // Höhe des Barometers 0 bis 320 möglich
+
+    // Methode um die aktuelle Höhe des Barometers zu bestimmen
+    function setBarometerHeight(barHeight) {
+        var calculatedHeight = (intValue - 50) * 3.55; // Höhe des Thermometers berechnen (-50 da der Wert 50 unserem Nullpunkt entspricht und * 3.55 da 140 der höchste Wert sein soll
+        var element = document.getElementById('bar'); // Element aus HTML Document ziehen
+        element.style.height = calculatedHeight + 'px'; // Neue Höhe des Thermometers festlegen
+    }
+
+    // Aktualisierung der Höhe alle 1000ms (1s)
+    setInterval(function () {
+        setBarometerHeight(barHeight);
+    });
+
+</script>
+{{ endblock }}
